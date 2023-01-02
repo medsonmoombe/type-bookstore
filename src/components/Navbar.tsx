@@ -1,19 +1,12 @@
 import { useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
+import { MdSearch } from "react-icons/md";
+import DropDown from "./DropDown";
 
-type Options = {
-  id: number;
-  name: string;
-};
 
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const options: Options[] = [
-    { name: "religious", id: 1 },
-    { name: "fiction", id: 2 },
-    { name: "sports", id: 3 },
-  ];
 
   const handleOpen = () => {
     setOpen(!open);
@@ -29,11 +22,11 @@ const Navbar = () => {
         </a>
       </h1> }
       {open ? (
-        <span className="absolute left-0 z-10 md:hidden border-2 border-orange-700 rounded">
+        <span className="absolute left-0 z-10 md:hidden lg:hidden border-2 border-orange-700 rounded">
           <IoMdClose size={25} color={"#fff"} onClick={handleClose} />
         </span>
       ) : (
-        <span className="absolute right-0 md:hidden">
+        <span className="absolute right-0 md:hidden lg:hidden">
           <BiMenu size={35} color={"#fff"} onClick={handleOpen} />
         </span>
       )}
@@ -49,7 +42,7 @@ const Navbar = () => {
             Bookstore
           </a>
         </h1>
-        <ul className="list-none flex justify-around items-center gap-4">
+        <ul className="list-none flex sm:flex-col justify-around items-center gap-4">
           <li>
             <a
               className="uppercase sm:border-orange-700 sm:border-b-2 sm:w-full font-semibold text-white font-poppins text-white hover:text-orange-400 transition delay-100 duration-300 ease-in-out"
@@ -58,14 +51,10 @@ const Navbar = () => {
               Sign In
             </a>
           </li>
-          <li>
-            <a
-              className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold sm:hidden sm:text-2xl"
-              href="/sign_out"
-            >
-              Sign Out
-            </a>
-          </li>
+          <div className="relative flex justify-center items-center">
+         <input type="search" name="search" placeholder="Search books" className="w-[60%] outline-0 pl-2 pr-4 sm:pr-6"/>
+         <MdSearch size={25} className="text-orange-400 cursor-pointer absolute sm:right-12 top-0 right-16 flex justify-center items-center"/>
+          </div>
         </ul>
         <div
           className={
@@ -74,19 +63,8 @@ const Navbar = () => {
               : "flex justify-around items-center gap-1 w-80"
           }
         >
-          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold">
-            Categories:
-          </span>
-          <select
-            id="small"
-            className="w-auto p-2 text-sm text-white border-0 outline-0 rounded bg-transparent"
-            name="categories"
-          >
-            {options.map((option) => (
-              <option className="bg-gray-400">{option.name}</option>
-            ))}
-          </select>
-          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold">Add Book</span>
+         <DropDown/>
+          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold"><a href="/new">Add Book</a></span>
         </div>
       </div>
     </nav>
