@@ -6,7 +6,7 @@ import { data } from "./fakeData";
 
 const BookList = () => {
   const dispatch = useDispatch();
-  const [books, setBooks] = useState<string[]>([]);
+  const [books, setBooks] = useState<any>([]);
 
   const log = (id: number) => {
     const filtered = data.filter((item) => item.id === id);
@@ -22,23 +22,26 @@ const BookList = () => {
         method: "GET"
       });
       const jsonData = await data.json();
-      setBooks(jsonData);
+      if(jsonData) 
+        setBooks(jsonData);
      dispatch(fetchbook(jsonData))
     };
 
     api();
   }, [dispatch]);
 
-  // console.log(books);
-  
 
 
+console.log(books);
+
+
+console.log(books.data);
 
   return (
     <>
     <h1 className="text-start text-gray-400 font-semibold text-2xl ml-4 mt-10">Books</h1>
       <section className="grid grid-cols-4 w-full sm:grid-cols-2 pt-20 gap-2 pr-4 pl-4">
-        {data.map((book) => {
+        {books?.map((book: any) => {
           return (
             <>
               <a href={`book/${book.id}`}>
@@ -49,7 +52,7 @@ const BookList = () => {
               >
                 <div>
                   <img
-                    src={book.img}
+                    src={book.image}
                     alt="book"
                     className=" w-[250px] h-[300px] sm:w-[180px] sm:h-[220px] "
                   />

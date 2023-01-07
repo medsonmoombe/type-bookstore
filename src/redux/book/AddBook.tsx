@@ -7,11 +7,13 @@ const initialState: {
   title: string;
   author: string;
   description: string;
+  image: File| string
 }[] = [
   {
     title: "",
     author: "",
     description: "",
+    image: ""
   },
 ];
 

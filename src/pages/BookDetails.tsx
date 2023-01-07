@@ -1,8 +1,11 @@
 import React, {useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import { data } from "../components/fakeData";
 import "./book.css";
+import { fetchbook } from "../redux/book/AddBook";
+
 
 type Color = {
   orange: string;
@@ -14,11 +17,13 @@ const colors: Color = {
 };
 
 const BookDetails = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [rating, setRating] = useState(0);
+  const [books, setBooks] = useState([]);
   const [hover, setHover] = useState(0);
 
-  const books = data.filter((book) => Number(book.id) === Number(id));
+
   const star = Array(5).fill(0);
   const handleClick = (val: number) => {
     setRating(5);
@@ -29,11 +34,31 @@ const BookDetails = () => {
     (books.forEach((book)=> setRating(book.rating)
     ));
   }, [rating, id])
+
+  const url ="http://localhost:3000/books";
+
+  useEffect(() => {
+    const api = async () => {
+      const data = await fetch(url, {
+        method: "GET"
+      });
+      const jsonData = await data.json();
+      if(jsonData) 
+        setBooks(jsonData);
+     dispatch(fetchbook(jsonData))
+    };
+
+    api();
+  }, [dispatch]);
+
+  // Book to be displayed using the id from the params
+  const book = books.filter((book: any) => Number(book.id) === Number(id));
+  
   
 
   return (
     <div>
-      {books.map((book) => {
+      {book.map((book:any) => {
         return (
           <div
             key={book.id}
@@ -41,7 +66,7 @@ const BookDetails = () => {
           >
             <div className="w-[30%] sm:w-[100%] m-auto shadow-lg h-[450px] sm:h-[400px] p-4">
               <img
-                src={book.img}
+                src={book.image}
                 alt="book_image"
                 className="m-auto w-[90%] pt-4 h-[100%]"
               />
