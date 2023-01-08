@@ -3,7 +3,7 @@ import dragon from "../assets/images/dragon.jpeg";
 import fire from "../assets/images/fire.jpeg";
 import game from "../assets/images/game_of_thrones.jpg";
 
-type Book = {
+export type Book = {
   title: string;
   img: string;
   description: string;

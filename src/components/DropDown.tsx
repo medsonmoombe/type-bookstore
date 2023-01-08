@@ -42,7 +42,7 @@ const DropDown = () => {
 
         {first ? (
           <>
-            <div className="bg-gray-500  fixed top-12 m-auto p-4 rounded w-[200px] justify-center items-center">
+            <div className="bg-gray-500  fixed top-20 m-auto p-4  w-[200px] justify-center items-center">
               {options.map((option) => {
                 return (
                   <div key={option.id} onClick={handleClose} className="flex flex-col gap-2 justify-center items-center">

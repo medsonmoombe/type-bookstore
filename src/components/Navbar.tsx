@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
-import { MdSearch } from "react-icons/md";
+import { useSelector } from "react-redux";
+import logo from "../assets/images/log.png";
+import { Book } from "./fakeData";
+// import {BsBasket} from "react-icons/bs";
 import DropDown from "./DropDown";
 
-
 const Navbar = () => {
+  const books: Book[] = useSelector((state: any | []) => state.book);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => {
@@ -14,13 +17,18 @@ const Navbar = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
-    <nav className="bg-sky-700 h-16 w-full flex justify-between items-center font-poppins sm:w-full">
-      {open ? "" : <h1 className="text-orange-400 font-semibold text-3xl lg:hidden">
-        <a className="uppercase " href="/">
-          Bookstore
-        </a>
-      </h1> }
+    <nav className="bg-sky-600 h-16 w-full flex justify-between items-center font-poppins sm:w-full">
+      {open ? (
+        ""
+      ) : (
+        <h1 className="text-orange-400 font-semibold text-3xl lg:hidden">
+          <a className="uppercase " href="/">
+            Bookstore
+          </a>
+        </h1>
+      )}
       {open ? (
         <span className="absolute left-0 z-10 md:hidden lg:hidden border-2 border-orange-700 rounded">
           <IoMdClose size={25} color={"#fff"} onClick={handleClose} />
@@ -37,11 +45,10 @@ const Navbar = () => {
             : " w-full flex justify-around items-center sm:flex-col sm:hidden"
         }
       >
-        <h1 className="text-orange-400 font-semibold text-3xl">
-          <a className="uppercase " href="/">
-            Bookstore
+        {/* <h1 className="text-orange-400 font-semibold text-3xl flex items-center gap-0"> */}
+          <a className="uppercase w-[200px] " href="/">
+          <img className="w-[150px] h-auto" src={logo} alt="logo" />
           </a>
-        </h1>
         <ul className="list-none flex sm:flex-col justify-around items-center gap-4">
           <li>
             <a
@@ -51,10 +58,6 @@ const Navbar = () => {
               Sign In
             </a>
           </li>
-          <div className="relative flex justify-center items-center">
-         <input type="search" name="search" placeholder="Search books" className="w-[60%] outline-0 pl-2 pr-4 sm:pr-6"/>
-         <MdSearch size={25} className="text-orange-400 cursor-pointer absolute sm:right-12 top-0 right-16 flex justify-center items-center"/>
-          </div>
         </ul>
         <div
           className={
@@ -63,8 +66,12 @@ const Navbar = () => {
               : "flex justify-around items-center gap-1 w-80"
           }
         >
-         <DropDown/>
-          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold"><a href="/new">Add Book</a></span>
+          <DropDown />
+          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold">
+            <a href="/new">Add Book</a>
+          </span>
+          {/* <BsBasket size={20} className="text-orange-400 mb-2"/>
+          <span className="rounded-full bg-green-600 h-[20px] w-[20px] absolute right-16 mt-2 text-white text-xs top-0">2</span> */}
         </div>
       </div>
     </nav>
