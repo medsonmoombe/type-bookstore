@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import { data } from "../components/fakeData";
 import "./book.css";
@@ -27,10 +27,10 @@ const BookDetails = () => {
     setRating(5);
   };
 
-  useEffect(() => {
-    const books = data.filter((book) => Number(book.id) === Number(id));
-    books.forEach((book) => setRating(book.rating));
-  }, [rating, id]);
+  // useEffect(() => {
+  //   const books = data.filter((book) => Number(book.id) === Number(id));
+  //   books.forEach((book) => setRating(book.rating));
+  // }, [rating, id]);
 
   const url = "http://localhost:3000/books";
 
@@ -46,6 +46,24 @@ const BookDetails = () => {
 
     api();
   }, [dispatch]);
+
+
+  const ratings = useSelector((state: any | []) => state.ratings);
+
+
+  useEffect(() => {
+      if (ratings.rating !== "undefined") {
+        
+        let rate = ratings.rating;
+        let total = rate ? rate.forEach((el: any) => {
+         const book = Number(el.id) === Number(id)
+         if(book) {
+          setRating(el.rating)
+         }
+        }
+        ): 0;
+      }
+  }, [ratings.rating, id])
 
   // Book to be displayed using the id from the params
   const book = books.filter((book: any) => Number(book.id) === Number(id));

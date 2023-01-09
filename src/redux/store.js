@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import addBookReducer from './book/AddBook';
 import fetchbookReducer from './book/BookList';
+import fetchratingReducer from './review/ratingSclice';
 
 
 // const persistedState = loadFromLocalStorage();
@@ -8,7 +9,8 @@ import fetchbookReducer from './book/BookList';
 const store = configureStore({
   reducer: {
     books: addBookReducer,
-    book: fetchbookReducer
+    book: fetchbookReducer,
+    ratings: fetchratingReducer
   },
 });
 // store.subscribe(() => saveToLocalStorage(store.getState()));

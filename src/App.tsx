@@ -8,7 +8,9 @@ import Navbar from './components/Navbar';
 import AddBook from './pages/AddBook';
 import BookDetails from './pages/BookDetails';
 import Home from './pages/Home';
+import Review from './pages/Review';
 import { fetchbook } from './redux/book/BookList';
+import { fetchRatings } from './redux/review/ratingSclice';
 
 function App() {
 
@@ -29,6 +31,20 @@ function App() {
     api();
   }, [dispatch]);
 
+  const ratingsUrl = "http://localhost:3000/rating";
+
+  useEffect(() => {
+    const api = async () => {
+      const data = await fetch(ratingsUrl, {
+        method: "GET",
+      });
+      const jsonData = await data.json();
+      dispatch(fetchRatings(jsonData));
+    };
+
+    api();
+  }, [dispatch]);
+
   return (
     <div className="App">
       <Navbar/>
@@ -36,6 +52,7 @@ function App() {
         <Route path="/" element={ <Home/>} />
         <Route path="/new" element={ <AddBook/>} />
         <Route path="/book/:id" element={ <BookDetails/>} />
+        <Route path="book/:id/review" element={ <Review/>} />
       </Routes>
     </div>
   );

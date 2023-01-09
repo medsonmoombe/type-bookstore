@@ -42,11 +42,11 @@ const DropDown = () => {
 
         {first ? (
           <>
-            <div className="bg-gray-500  fixed top-20 m-auto p-4  w-[200px] justify-center items-center">
+            <div className="bg-[#eee] shadow-lg absolute top-20 m-auto p-4  w-[200px] justify-center items-center">
               {options.map((option) => {
                 return (
                   <div key={option.id} onClick={handleClose} className="flex flex-col gap-2 justify-center items-center">
-                    <span onClick={()=> console.log(option.id)} className="text-white border-y-2 w-[100px] border-t-0 cursor-pointer border-orange-400">{option.name}</span>
+                    <span onClick={()=> console.log(option.id)} className="text-black border-y-2 w-[100px] border-t-0 cursor-pointer border-slate-400">{option.name}</span>
                   </div>
                 );
               })}

@@ -40,7 +40,7 @@ const BookList = () => {
   return (
     <>
     <div className="flex flex-col gap-4 ml-4">
-      <h1 className="text-start text-gray-400 font-semibold text-2xl ml-4 mt-10">
+      <h1 className="text-start font-poppins text-slate-600 font-semibold text-2xl ml-4 mt-10">
       Books available in Stock
       </h1>
       <div className="relative flex justify-start items-start ml-4">
@@ -58,7 +58,7 @@ const BookList = () => {
           </div>
       <a  href="/new" className="bg-sky-700 ml-4  text-white px-2 py-2 font-poppins w-[100px] rounded capitalize">Add Book</a>
     </div>
-      <section className="grid grid-cols-4 w-full sm:grid-cols-2 pt-16 gap-2 pr-4 pl-4">
+      <section className="grid grid-cols-5 md:grid-cols-3 w-full sm:grid-cols-2 pt-16 gap-2 pr-4 pl-4">
         {(searched ? book : books).map((book: any) => {
           return (
             <>
@@ -77,8 +77,8 @@ const BookList = () => {
                   </div>
                 </a>
                 <div className="w-full justify-center items-center ">
-                  <h1 className="font-semibold cursor-pointer pt-2 text-xl w-full text-gray-500 font-poppins capitalize">
-                    {book.title}
+                  <h1 className=" hover:underline cursor-pointer pt-2 text-xl w-full text-slate-700 font-poppins capitalize">
+                  <a href={`book/${book.id}`}>{book.title}</a>
                   </h1>
                   {/* <button type="button" className="bg-sky-700 sm:w-[50%] text-white px-2 py-2 font-poppins w-full rounded capitalize">Add to Basket</button> */}
                 </div>
