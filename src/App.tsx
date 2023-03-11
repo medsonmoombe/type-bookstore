@@ -9,14 +9,18 @@ import AddBook from './pages/AddBook';
 import Sign from './pages/auth/Sign';
 import BookDetails from './pages/BookDetails';
 import Home from './pages/Home';
+import ReadBook from './pages/ReadBook';
 import Review from './pages/Review';
 import { fetchbook } from './redux/book/BookList';
 import { fetchRatings } from './redux/review/ratingSclice';
 
-function App() {
+interface ReadBookProps {
+  books: any;
+}
 
+function App() {
   const dispatch = useDispatch();
-  // const [books, setBooks] = useState<any>([]);
+  const [books, setBooks] = useState<any>([]);
   const url = `http://localhost:3000/users/${1}/books`;
 
   useEffect(() => {
@@ -25,27 +29,29 @@ function App() {
         method: "GET",
       });
       const jsonData = await data.json();
-      // if (jsonData) setBooks(jsonData);
-      dispatch(fetchbook(jsonData));
+      if (jsonData) {
+        setBooks(jsonData);
+        dispatch(fetchbook(jsonData));
+      }
     };
 
     api();
   }, [dispatch]);
 
-
-
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path="/sign_in" element={ <Sign/>} />
-        <Route path="/" element={ <Home/>} />
-        <Route path="/new" element={ <AddBook/>} />
-        <Route path="/book/:id" element={ <BookDetails/>} />
-        <Route path="book/:id/review" element={ <Review/>} />
+        <Route path="/sign_in" element={<Sign />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/new" element={<AddBook />} />
+        <Route path="/book/:id/read" element={<ReadBook books={books} />} />
+        <Route path="/book/:id" element={<BookDetails />} />
+        <Route path="/book/:id/review" element={<Review />} />
       </Routes>
     </div>
   );
 }
 
 export default App;
+

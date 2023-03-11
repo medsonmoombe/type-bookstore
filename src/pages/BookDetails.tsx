@@ -16,6 +16,10 @@ const colors: Color = {
   gray: "#a9a9a9",
 };
 
+interface CommentFormProps {
+  onSubmit: (comment: string) => void;
+}
+
 const BookDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -23,29 +27,40 @@ const BookDetails = () => {
   const [books, setBooks] = useState([]);
   const [hover, setHover] = useState(0);
 
-  const bookId = 1;
-    const [value, setValue] = useState<number | undefined>(undefined);
-    const [rateSuccess, setRateSucess] = useState<boolean>(false);
-    const [rateError, setRateError] = useState<boolean>(false);
+  const [value, setValue] = useState<number | undefined>(undefined);
+  const [rateSuccess, setRateSucess] = useState<boolean>(false);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [notClicked, setNotClicked] = useState<boolean>(false);
+  const [input, setInput] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>();
+
   const star = Array(5).fill(0);
 
-  const handleClick = async(val: number) => {
+  const handleClick = async (val: number) => {
     setValue(val);
-
-       try {
-            const response = await axios.post(`http://localhost:3000/users/${1}/books/${1}/rating`, { value: val , user_id: 1, book_id: 1});
-            if(response.status === 200) {
-              setRateSucess(true)
-            }else {
-              setRateError(true)
-            };
-            console.log(response);
-            
-          } catch (error) {
-            console.log(error);
-          } 
+    setClicked(true);
+    if (!clicked) {
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/users/${1}/books/${id}/rating`,
+          { value: val, user_id: 1, book_id: 1 }
+        );
+        if (response.status === 200) {
+          setRateSucess(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setNotClicked(true);
+    }
   };
 
+  const handleComment = () => {
+    setInput((prev) => !prev);
+    console.log(comment);
+    setComment("");
+  };
 
   const url = `http://localhost:3000/users/${1}/books`;
 
@@ -62,26 +77,42 @@ const BookDetails = () => {
     api();
   }, [dispatch]);
 
-const getRatings = async() => {
-      try {
-      const response = await axios.get(`http://localhost:3000/users/${1}/books/${1}`);
+  const getRatings = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/users/${1}/books/${id}`
+      );
       const ratings: any[] = response.data.ratings;
+
       const sumOfRatings = ratings.length;
       const numberOfRatings = 4;
-      
-      const averageRating = sumOfRatings / numberOfRatings * 0.1;
+
+      const averageRating = (sumOfRatings / numberOfRatings) * 0.1;
       const cappedRating = Math.min(averageRating, 5);
-      
+
       setRating(cappedRating);
+      console.log(cappedRating);
     } catch (error) {
       console.log(error);
     }
-}
+  };
 
-useEffect(()=> {
-  getRatings();
-})
+  useEffect(() => {
+    getRatings();
+  });
 
+  useEffect(() => {
+    let timer: any;
+    if (rateSuccess || notClicked) {
+      timer = setTimeout(() => {
+        setRateSucess(false);
+        setNotClicked(false);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [rateSuccess, notClicked]);
 
   // Book to be displayed using the id from the params
   const book = books.filter((book: any) => Number(book.id) === Number(id));
@@ -135,25 +166,41 @@ useEffect(()=> {
                   })}
                 </div>
               </div>
-              {rateSuccess ? <p>Rate added successfully</p>: ""}
+              {rateSuccess && (
+                <p className="flex justify-start w-full font-poppins text-green-500 mt-2 ml-4">
+                  Book ratings added successfully
+                </p>
+              )}
+              {notClicked && (
+                <p className="flex justify-start w-full font-poppins text-red-500 mt-2 ml-4">
+                  You have already rated this book
+                </p>
+              )}
               <p className=" text-start p-4 text-gray-700 w-[100%]">
                 {book.description}
               </p>
               <div className="flex justify-start items-start pl-4 pt-4 flex-col gap-4">
                 <a
-                  href={book.file}
+                  href={`${book.id}/read`}
                   className=" hover:underline text-blue-700  py-2 px-4 rounded hover:text-amber-600 transition duration-150 ease-out hover:ease-in sm:py-1 sm:px-4 sm:text-xs"
-                  download="file.pdf"
                 >
                   {" "}
                   Read Book
                 </a>
-                <a
-                  href={`${book.id}/review`}
-                  className="bg-orange-400 px-2 text-center  py-1 text-white capitalize rounded border-0"
+                <button
+                  type="submit"
+                  onClick={() => handleComment()}
+                  className="bg-orange-400 px-2 text-center py-1 text-white capitalize rounded border-0"
                 >
-                  Add Review
-                </a>
+                  {input ? "Comment" : "Add Comment"}
+                </button>
+                {input && (
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    className="bg-gray-100 outline-none text-xs p-2"
+                  ></textarea>
+                )}
               </div>
             </div>
           </div>
