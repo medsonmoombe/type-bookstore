@@ -5,6 +5,7 @@ import { FaStar } from "react-icons/fa";
 import { data } from "../components/fakeData";
 import "./book.css";
 import { fetchbook } from "../redux/book/AddBook";
+import axios from "axios";
 
 type Color = {
   orange: string;
@@ -22,17 +23,31 @@ const BookDetails = () => {
   const [books, setBooks] = useState([]);
   const [hover, setHover] = useState(0);
 
+  const bookId = 1;
+    const [value, setValue] = useState<number | undefined>(undefined);
+    const [rateSuccess, setRateSucess] = useState<boolean>(false);
+    const [rateError, setRateError] = useState<boolean>(false);
   const star = Array(5).fill(0);
-  const handleClick = (val: number) => {
-    setRating(5);
+
+  const handleClick = async(val: number) => {
+    setValue(val);
+
+       try {
+            const response = await axios.post(`http://localhost:3000/users/${1}/books/${1}/rating`, { value: val , user_id: 1, book_id: 1});
+            if(response.status === 200) {
+              setRateSucess(true)
+            }else {
+              setRateError(true)
+            };
+            console.log(response);
+            
+          } catch (error) {
+            console.log(error);
+          } 
   };
 
-  // useEffect(() => {
-  //   const books = data.filter((book) => Number(book.id) === Number(id));
-  //   books.forEach((book) => setRating(book.rating));
-  // }, [rating, id]);
 
-  const url = "http://localhost:3000/books";
+  const url = `http://localhost:3000/users/${1}/books`;
 
   useEffect(() => {
     const api = async () => {
@@ -47,27 +62,29 @@ const BookDetails = () => {
     api();
   }, [dispatch]);
 
+const getRatings = async() => {
+      try {
+      const response = await axios.get(`http://localhost:3000/users/${1}/books/${1}`);
+      const ratings: any[] = response.data.ratings;
+      const sumOfRatings = ratings.length;
+      const numberOfRatings = 4;
+      
+      const averageRating = sumOfRatings / numberOfRatings * 0.1;
+      const cappedRating = Math.min(averageRating, 5);
+      
+      setRating(cappedRating);
+    } catch (error) {
+      console.log(error);
+    }
+}
 
-  const ratings = useSelector((state: any | []) => state.ratings);
+useEffect(()=> {
+  getRatings();
+})
 
-
-  useEffect(() => {
-      if (ratings.rating !== "undefined") {
-        
-        let rate = ratings.rating;
-        let total = rate ? rate.forEach((el: any) => {
-         const book = Number(el.id) === Number(id)
-         if(book) {
-          setRating(el.rating)
-         }
-        }
-        ): 0;
-      }
-  }, [ratings.rating, id])
 
   // Book to be displayed using the id from the params
   const book = books.filter((book: any) => Number(book.id) === Number(id));
-
   return (
     <div>
       {book.map((book: any) => {
@@ -118,6 +135,7 @@ const BookDetails = () => {
                   })}
                 </div>
               </div>
+              {rateSuccess ? <p>Rate added successfully</p>: ""}
               <p className=" text-start p-4 text-gray-700 w-[100%]">
                 {book.description}
               </p>

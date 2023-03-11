@@ -19,12 +19,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-sky-600 h-16 w-full flex justify-between items-center font-poppins sm:w-full">
+    <nav className="bg-sky-600  h-16 w-full flex justify-between items-center font-poppins sm:w-full">
       {open ? (
         ""
       ) : (
         <h1 className="text-orange-400 font-semibold text-3xl lg:hidden">
-          <a className="uppercase " href="/">
+          <a className=" " href="/">
             Bookstore
           </a>
         </h1>
@@ -46,13 +46,13 @@ const Navbar = () => {
         }
       >
         {/* <h1 className="text-orange-400 font-semibold text-3xl flex items-center gap-0"> */}
-          <a className="uppercase w-[200px] " href="/">
+          <a className=" w-[200px] " href="/">
           <img className="w-[150px] h-auto" src={logo} alt="logo" />
           </a>
         <ul className="list-none flex sm:flex-col justify-around items-center gap-4">
           <li>
             <a
-              className="uppercase sm:border-orange-700 sm:border-b-2 sm:w-full font-semibold text-white font-poppins text-white hover:text-orange-400 transition delay-100 duration-300 ease-in-out"
+              className=" sm:border-orange-700 sm:border-b-2 sm:w-full font-semibold text-white font-poppins text-white hover:text-orange-400 transition delay-100 duration-300 ease-in-out"
               href="/sign_in"
             >
               Sign In
@@ -67,7 +67,7 @@ const Navbar = () => {
           }
         >
           <DropDown />
-          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full uppercase font-semibold">
+          <span className="text-white sm:border-orange-700 sm:border-b-2 sm:w-full  font-semibold">
             <a href="/new">Add Book</a>
           </span>
           {/* <BsBasket size={20} className="text-orange-400 mb-2"/>

@@ -8,6 +8,9 @@ module.exports = {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif']
       },
+      backgroundImage: {
+        'sign_in': "url('/assets/images/books.jpg')",
+      },
       screens: {
         'sm': { 'max': '767px'},
         'md': { 'min': '768px', 'max' : '901px'},

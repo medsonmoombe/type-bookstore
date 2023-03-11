@@ -51,12 +51,8 @@ const BookList = () => {
               placeholder="Search book..."
               className="w-[200px] outline-0 border-gray-400 border-2  pl-2 pr-4 sm:pr-6"
             />
-            <MdSearch
-              size={25}
-              className="text-orange-400  cursor-pointer absolute sm:right-12 top-1 left-[175px] flex justify-center items-center"
-            />
           </div>
-      <a  href="/new" className="bg-sky-700 ml-4  text-white px-2 py-2 font-poppins w-[100px] rounded capitalize">Add Book</a>
+      <a  href="/new" className="bg-transparent ml-4  text-sky-600 px-2 py-1 border-2 hover:bg-sky-600  hover:text-white border-sky-600 font-poppins w-[100px] rounded capitalize">Add Book</a>
     </div>
       <section className="grid grid-cols-5 md:grid-cols-3 w-full sm:grid-cols-2 pt-16 gap-2 pr-4 pl-4">
         {(searched ? book : books).map((book: any) => {
