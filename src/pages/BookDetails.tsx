@@ -182,7 +182,7 @@ const BookDetails = () => {
               <div className="flex justify-start items-start pl-4 pt-4 flex-col gap-4">
                 <a
                   href={`${book.id}/read`}
-                  className=" hover:underline text-blue-700  py-2 px-4 rounded hover:text-amber-600 transition duration-150 ease-out hover:ease-in sm:py-1 sm:px-4 sm:text-xs"
+                  className=" hover:underline text-blue-7 00  py-2 px-4 rounded hover:text-amber-600 transition duration-150 ease-out hover:ease-in sm:py-1 sm:px-4 sm:text-xs"
                 >
                   {" "}
                   Read Book
