@@ -6,6 +6,7 @@ import {
 import './App.css';
 import Navbar from './components/Navbar';
 import AddBook from './pages/AddBook';
+import Register from './pages/auth/Register';
 import Sign from './pages/auth/Sign';
 import BookDetails from './pages/BookDetails';
 import Home from './pages/Home';
@@ -43,6 +44,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/sign_in" element={<Sign />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<AddBook />} />
         <Route path="/book/:id/read" element={<ReadBook books={books} />} />
