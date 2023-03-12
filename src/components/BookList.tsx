@@ -70,35 +70,34 @@ const BookList = () => {
         </div>
       </div>
 
-      <section className="grid grid-cols-5 md:grid-cols-3 w-full sm:grid-cols-2 pt-16 gap-2 pr-4 pl-4">
-        {(searched ? book : books).map((book: any) => {
-          return (
-            <>
-              <div
-                onClick={() => log(book.id)}
-                key={book.id}
-                className="flex flex-col w-[80%]] justify-center items-center shadow sm:w-[100%] m-auto h-[100%] sm:h-[100%] lg:p-4 sm:p-2"
-              >
-                <a href={`book/${book.id}`}>
-                  <div>
-                    <img
-                      src={book.image}
-                      alt="book"
-                      className=" w-[250px] h-[300px] sm:w-[180px] sm:h-[220px] "
-                    />
-                  </div>
-                </a>
-                <div className="w-full justify-center items-center ">
-                  <h1 className=" hover:underline cursor-pointer pt-2 text-xl w-full text-slate-700 font-poppins capitalize">
-                    <a href={`book/${book.id}`}>{book.title}</a>
-                  </h1>
-                  {/* <button type="button" className="bg-sky-700 sm:w-[50%] text-white px-2 py-2 font-poppins w-full rounded capitalize">Add to Basket</button> */}
-                </div>
-              </div>
-            </>
-          );
-        })}
-      </section>
+      <section className="grid grid-cols-6 m-auto justify-center items-center md:grid-cols-3 w-full sm:grid-cols-2 pt-16 gap-6 px-4">
+  {(searched ? book : books).map((book: any) => {
+    return (
+      <div
+        onClick={() => log(book.id)}
+        key={book.id}
+        className="flex flex-col items-center m-auto justify-between w-full max-w-md p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+      >
+        <a href={`book/${book.id}`} className="mb-4">
+          <img
+            src={book.image}
+            alt="book"
+            className="w-full h-50 object-cover rounded-md"
+          />
+        </a>
+        <div className="w-full text-center">
+          <a href={`book/${book.id}`} className="text-xl font-semibold text-gray-900 hover:text-gray-700 transition-colors duration-200">
+            {book.title}
+          </a>
+          <p className="text-gray-500 text-base mt-2">{book.author}</p>
+          {/* <button type="button" className="bg-sky-700 sm:w-[50%] text-white px-2 py-2 font-poppins w-full rounded capitalize">Add to Basket</button> */}
+        </div>
+      </div>
+    );
+  })}
+</section>
+
+
     </>
   );
 };
