@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-sky-600  h-16 w-full flex justify-between items-center font-poppins sm:w-full">
+    <nav className="bg-[#4A90E2]  h-16 w-full flex justify-between items-center font-poppins sm:w-full">
       {open ? (
         ""
       ) : (
@@ -41,7 +41,7 @@ const Navbar = () => {
       <div
         className={
           open
-            ? "absolute top-0 sm:left-[0px] sm:flex sm:flex-col sm:flex sm:bg-gray-700 h-screen gap-4 justify-start pt-20 gap-10 items-center w-60"
+            ? "absolute top-0 sm:left-[0px]  sm:flex-col sm:flex sm:bg-gray-700 h-screen gap-4 justify-start pt-20 gap-10 items-center w-60"
             : " w-full flex justify-around items-center sm:flex-col sm:hidden"
         }
       >

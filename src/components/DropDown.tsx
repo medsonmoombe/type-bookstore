@@ -7,57 +7,71 @@ type Options = {
 };
 
 const DropDown = () => {
-  const [first, setfirst] = useState<boolean>(false);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
   const options: Options[] = [
     { name: "religious", id: 1 },
     { name: "fiction", id: 2 },
     { name: "sports", id: 3 },
   ];
+
   const handleDisplay = () => {
-    setfirst(true);
+    setShowDropdown(true);
   };
 
   const handleClose = () => {
-    setfirst(!first);
+    setShowDropdown(false);
   };
+
   return (
     <>
-      <section onClick={handleClose} className="flex flex-col">
+      <section
+        className="relative flex flex-col z-20"
+        onMouseEnter={handleDisplay}
+        onMouseLeave={handleClose}
+      >
         <div className="flex">
-        <span onClick={handleDisplay} className="text-white cursor-pointer uppercase mt-1 font-semibold">Categories:</span>{first ? (
-          <MdOutlineArrowDropUp
-          size={30}
-            className="cursor-pointer text-white z-10"
-            onClick={handleClose}
-          />
-        ) : (
-          <MdOutlineArrowDropDown
-          size={30}
-            className="cursor-pointer text-white z-10"
-            onClick={handleDisplay}
-          />
-        )}
+          <span className="text-white cursor-pointer uppercase mt-1 font-semibold">
+            Categories:
+          </span>
+          {showDropdown ? (
+            <MdOutlineArrowDropUp
+              size={30}
+              className="cursor-pointer text-white z-10"
+              onClick={handleClose}
+            />
+          ) : (
+            <MdOutlineArrowDropDown
+              size={30}
+              className="cursor-pointer text-white z-10"
+              onClick={handleDisplay}
+            />
+          )}
         </div>
 
-        {first ? (
-          <>
-            <div className="bg-[#eee] shadow-lg absolute top-20 m-auto p-4  w-[200px] justify-center items-center">
-              {options.map((option) => {
-                return (
-                  <div key={option.id} onClick={handleClose} className="flex flex-col gap-2 justify-center items-center">
-                    <span onClick={()=> console.log(option.id)} className="text-black border-y-2 w-[100px] border-t-0 cursor-pointer border-slate-400">{option.name}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          ""
-        )}
+        {showDropdown ? (
+          <div className="bg-[#eee] shadow-lg absolute top-full m-auto p-4  w-[200px] justify-center items-center">
+            {options.map((option) => {
+              return (
+                <div
+                  key={option.id}
+                  className="flex flex-col gap-2 justify-center items-center"
+                >
+                  <span
+                    onClick={() => console.log(option.id)}
+                    className="text-black border-y-2 w-[100px] border-t-0 cursor-pointer border-slate-400"
+                  >
+                    {option.name}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
       </section>
     </>
   );
 };
 
 export default DropDown;
+
