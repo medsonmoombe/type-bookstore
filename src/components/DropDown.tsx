@@ -30,39 +30,40 @@ const DropDown = () => {
         onMouseEnter={handleDisplay}
         onMouseLeave={handleClose}
       >
-        <div className="flex">
+        <div className="flex items-center">
           <span className="text-white cursor-pointer uppercase mt-1 font-semibold">
             Categories:
           </span>
           {showDropdown ? (
             <MdOutlineArrowDropUp
               size={30}
-              className="cursor-pointer text-white z-10"
+              className="cursor-pointer text-white ml-2"
               onClick={handleClose}
             />
           ) : (
             <MdOutlineArrowDropDown
               size={30}
-              className="cursor-pointer text-white z-10"
+              className="cursor-pointer text-white ml-2"
               onClick={handleDisplay}
             />
           )}
         </div>
 
         {showDropdown ? (
-          <div className="bg-[#eee] shadow-lg absolute top-full m-auto p-4  w-[200px] justify-center items-center">
+          <div className="bg-white rounded-lg shadow-lg absolute top-full m-auto p-4 w-[200px]">
             {options.map((option) => {
               return (
                 <div
                   key={option.id}
-                  className="flex flex-col gap-2 justify-center items-center"
+                  className="flex items-center justify-between py-2 hover:bg-gray-100 rounded-lg"
                 >
                   <span
                     onClick={() => console.log(option.id)}
-                    className="text-black border-y-2 w-[100px] border-t-0 cursor-pointer border-slate-400"
+                    className="text-black cursor-pointer"
                   >
                     {option.name}
                   </span>
+                  <MdOutlineArrowDropDown size={20} className="text-gray-400" />
                 </div>
               );
             })}
@@ -74,4 +75,3 @@ const DropDown = () => {
 };
 
 export default DropDown;
-

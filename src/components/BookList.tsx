@@ -47,7 +47,7 @@ const BookList = () => {
           <h1 className="text-start font-poppins font-semibold text-2xl ml-4 mt-10 text-white">
             Explore Our Collection
           </h1>
-          <p className="text-center w-[500px] font-poppins  text-sm ml-4 mt-4 text-gray-300">
+          <p className="text-center w-[500px] font-poppins  text-sm ml-4 mt-4 text-gray-200">
             Discover a wealth of knowledge and entertainment at our library.
             With thousands of books to choose from, you'll find something to
             inspire, educate, and entertain you
